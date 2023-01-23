@@ -48,9 +48,9 @@ function onGalleryContainerClick(e) {
   if (!e.target.classList.contains("gallery__image")) return;
 
   const modal = createModal(e.target.dataset.source);
-
   modal.show();
-  window.addEventListener("keydown", onCloseModalByEscKeyClick);
+    
+  //   window.addEventListener("keydown", onCloseModalByEscKeyClick);
 }
 
 function createModal(source) {
