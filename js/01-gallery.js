@@ -1,21 +1,6 @@
 import { galleryItems } from "./gallery-items.js";
 // Change code below this line
 
-// console.log(galleryItems);
-
-{
-  /* <div class="gallery__item">
-  <a class="gallery__link" href="large-image.jpg">
-    <img
-      class="gallery__image"
-      src="small-image.jpg"
-      data-source="large-image.jpg"
-      alt="Image description"
-    />
-  </a>
-</div> */
-}
-
 const galleryContainer = document.querySelector(".gallery");
 
 galleryContainer.insertAdjacentHTML(
@@ -48,9 +33,13 @@ function onGalleryContainerClick(e) {
   if (!e.target.classList.contains("gallery__image")) return;
 
   const modal = createModal(e.target.dataset.source);
-  modal.show();
-    
-  //   window.addEventListener("keydown", onCloseModalByEscKeyClick);
+
+  bindEscKeyPressWithModal(modal);
+
+  modal.show(() => {
+    window.addEventListener("keydown", modal.closeByEspKey);
+  });
+
 }
 
 function createModal(source) {
@@ -61,7 +50,13 @@ function createModal(source) {
   return instance;
 }
 
-function onCloseModalByEscKeyClick(e) {
-  if (e.code === "Escape") modal.close();
-  window.removeEventListener("keydown", onCloseModalByEscKeyClick);
+function onEscKeyPress(e) {
+  if (e.code === "Escape") {
+    return this.close();
+  }
 }
+
+function bindEscKeyPressWithModal(obj) {
+  obj.closeByEspKey = onEscKeyPress.bind(obj);
+}
+
