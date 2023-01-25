@@ -32,30 +32,50 @@ function onGalleryContainerClick(e) {
   e.preventDefault();
   if (!e.target.classList.contains("gallery__image")) return;
 
-  const modal = createModal(e.target.dataset.source);
+  createModal(e.target.dataset.source);
+  // const modal = createModal(e.target.dataset.source);
 
-  bindEscKeyPressWithModal(modal);
-
-  modal.show(() => {
-    window.addEventListener("keydown", modal.closeByEspKey);
-  });
+  // bindEscKeyPressWithModal(modal);
+  // modal.show(() => {
+  //   window.addEventListener("keydown", modal.closeByEspKey);
+  // });
 }
 
 function createModal(source) {
-  const instance = basicLightbox.create(`
+  const instance = basicLightbox.create(
+    `
     <img src="${source}" width="1280">
-    `);
+    `,
+    {
+      onShow: (instance) => {
+        // Close when hitting escape.
+        document.onkeydown = function (evt) {
+          evt = evt || window.event;
+          let isEscape = false;
+          if ("key" in evt) {
+            isEscape = evt.key === "Escape" || evt.key === "Esc";
+          } else {
+            isEscape = evt.code === 27;
+          }
+          if (isEscape) {
+            instance.close();
+          }
+        };
+      },
+    }
+  );
+  instance.show();
 
-  return instance;
+  // return instance;
 }
 
-function onEscKeyPress(e) {
-  if (e.code === "Escape") {
-    window.removeEventListener("keydown", this.closeByEspKey);
-    return this.close();
-  }
-}
+// function onEscKeyPress(e) {
+//   if (e.code === "Escape") {
+//     window.removeEventListener("keydown", this.closeByEspKey);
+//     return this.close();
+//   }
+// }
 
-function bindEscKeyPressWithModal(obj) {
-  obj.closeByEspKey = onEscKeyPress.bind(obj);
-}
+// function bindEscKeyPressWithModal(obj) {
+//   obj.closeByEspKey = onEscKeyPress.bind(obj);
+// }
