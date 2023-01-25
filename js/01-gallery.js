@@ -32,7 +32,10 @@ function onGalleryContainerClick(e) {
   e.preventDefault();
   if (!e.target.classList.contains("gallery__image")) return;
 
+  // 1
   createModal(e.target.dataset.source);
+
+  // 2
   // const modal = createModal(e.target.dataset.source);
 
   // bindEscKeyPressWithModal(modal);
@@ -42,6 +45,7 @@ function onGalleryContainerClick(e) {
 }
 
 function createModal(source) {
+  // 1
   const instance = basicLightbox.create(
     `
     <img src="${source}" width="1280">
@@ -66,6 +70,12 @@ function createModal(source) {
   );
   instance.show();
 
+  // 2
+  // const instance = basicLightbox.create(
+  //   `
+  //   <img src="${source}" width="1280">
+  //   `
+  // );
   // return instance;
 }
 
