@@ -39,7 +39,6 @@ function onGalleryContainerClick(e) {
   modal.show(() => {
     window.addEventListener("keydown", modal.closeByEspKey);
   });
-
 }
 
 function createModal(source) {
@@ -52,6 +51,7 @@ function createModal(source) {
 
 function onEscKeyPress(e) {
   if (e.code === "Escape") {
+    window.removeEventListener("keydown", this.closeByEspKey);
     return this.close();
   }
 }
@@ -59,4 +59,3 @@ function onEscKeyPress(e) {
 function bindEscKeyPressWithModal(obj) {
   obj.closeByEspKey = onEscKeyPress.bind(obj);
 }
-
